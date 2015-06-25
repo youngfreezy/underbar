@@ -377,6 +377,19 @@
 
 
     };
+    
+    //this is the algorithmic solution. I had to look it up and research it, so not counting it as my answer: 
+
+//  _.shuffle = function(array) {
+//         var newArray = array.slice(0);
+//         for (var i = newArray.length - 1; i > 0; i--) {
+//             var j = Math.floor(Math.random() * (i + 1));
+//             var temp = newArray[i];
+//             newArray[i] = newArray[j];
+//             newArray[j] = temp;
+//     }
+//     return newArray;
+// }
 
 
     /**
