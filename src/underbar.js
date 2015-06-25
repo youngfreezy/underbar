@@ -354,7 +354,29 @@
     // TIP: This function's test suite will ask that you not modify the original
     // input array. For a tip on how to make a copy of an array, see:
     // http://mdn.io/Array.prototype.slice
-    _.shuffle = function(array) {};
+    // _.shuffle = function(array) {
+
+
+    //     //TODO: learn the algorithm for this. this is just a hack for now. 
+
+    //     var newArray = array.slice(0);
+
+    //     newArray.sort().reverse();
+
+    //     return newArray;
+    // };
+
+    //OR:
+
+    _.shuffle = function(array) {
+        var newArray = array.slice(0);
+        var sortValue = Math.random();
+        return newArray.sort(function(a, b) {
+            return (a * sortValue) + (b * sortValue);
+        });
+
+
+    };
 
 
     /**
@@ -387,17 +409,6 @@
     //
     // Hint: Use Array.isArray to check if something is an array
     _.flatten = function(nestedArray, result) {
-
-        var arr = [];
-        for (var i = 0; i < nestedArray.length; i++) {
-            if (Array.isArray(nestedArray[i])) { // [4,5]
-                arr.push(_.flatten(nestedArray[i], result)); // 
-            } else {
-                arr.push(arr[i], result);
-            }
-        }
-        return arr;
-
 
     };
 
