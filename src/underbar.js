@@ -101,7 +101,23 @@
     };
 
     // Produce a duplicate-free version of the array.
-    _.uniq = function(array) {};
+    _.uniq = function(array) {
+        //create the uniques array in this scope instead of trying to use 
+        //filter.  gets confusing thinking about the array that filter would return.
+        //the only thing you are returning is the array don't need to return anything else
+        //sounds like each!
+        var uniques = [];
+
+        _.each(array, function(item) {
+            //this function is defined by me. I can have it do whatever I want!
+            if (_.indexOf(uniques, item) === -1) {
+                uniques.push(item);
+            }
+        });
+        return uniques;
+    };
+
+
 
 
     // Return the results of applying an iterator to each element.
@@ -109,6 +125,13 @@
         // map() is a useful primitive iteration function that works a lot
         // like each(), but in addition to running the operation on all
         // the members, it also maintains an array of results.
+
+        var newArray = [];
+
+        _.each(collection, function(x) {
+            newArray.push(iterator(x));
+        })
+        return newArray;
     };
 
     /*
@@ -149,7 +172,20 @@
     //     return total + number * number;
     //   }); // should be 5, regardless of the iterator function passed in
     //          No accumulator is given so the first element is used.
-    _.reduce = function(collection, iterator, accumulator) {};
+    _.reduce = function(list, callback, sum) {
+
+      
+      if(arguments.length < 3) {
+        sum = list.shift();
+      } 
+      _.each(list, function(y){
+          sum = callback(sum, y);
+        });
+      
+        
+        return sum;
+
+    };
 
     // End Part 1
 
