@@ -174,15 +174,15 @@
     //          No accumulator is given so the first element is used.
     _.reduce = function(list, callback, sum) {
 
-      
-      if(arguments.length < 3) {
-        sum = list.shift();
-      } 
-      _.each(list, function(y){
-          sum = callback(sum, y);
+
+        if (arguments.length < 3) {
+            sum = list.shift();
+        }
+        _.each(list, function(val) {
+            sum = callback(sum, val);
         });
-      
-        
+
+
         return sum;
 
     };
@@ -204,8 +204,18 @@
 
     // Determine whether all of the elements match a truth test.
     _.every = function(collection, iterator) {
-        // TIP: Try re-using reduce() here.
+        // TIP: Try re-using reduce() here. 
+        if (arguments.length < 2) {
+            return _.reduce(collection, function(allPassed, val) {
+                return Boolean(val);
+            })
+        }
+        return _.reduce(collection, function(allPassed, val) {
+            return (Boolean(iterator(val)) && allPassed);
+        }, true)
     };
+
+   
 
     // Determine whether any of the elements pass a truth test. If no iterator is
     // provided, provide a default one
