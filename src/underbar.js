@@ -305,7 +305,7 @@
         };
     };
 
-    // Memorize an expensive function's results by storing them. You may assume
+    // Memoize an expensive function's results by storing them. You may assume
     // that the function takes only one argument and that it is a primitive.
     // memoize could be renamed to oncePerUniqueArgumentList; memoize does the
     // same thing as once, but based on many sets of unique arguments.
@@ -313,7 +313,20 @@
     // _.memoize should return a function that, when called, will check if it has
     // already computed the result for the given argument and return that value
     // instead if possible.
-    _.memoize = function(func) {};
+    _.memoize = function(func) {
+
+
+        var uniqueArguments = {};
+
+        return function(key) {
+
+            if (!uniqueArguments.hasOwnProperty(key)) {
+                uniqueArguments[key] = func.apply(this, arguments);
+            }
+
+            return uniqueArguments[key];
+        };
+    };
 
     // Delays a function for the given number of milliseconds, and then calls
     // it with the arguments supplied.
@@ -321,7 +334,14 @@
     // The arguments for the original function are passed after the wait
     // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
     // call someFunction('a', 'b') after 500ms
-    _.delay = function(func, wait) {};
+    _.delay = function(func, wait) {
+        //finally got that slice won't work on arguments!
+        var args = Array.prototype.slice.call(arguments);
+        args = args.slice(2);
+        return setTimeout(function() {
+            return func.apply(null, args);
+        }, wait);
+    };
 
 
     /**
@@ -366,7 +386,20 @@
     // The new array should contain all elements of the multidimensional array.
     //
     // Hint: Use Array.isArray to check if something is an array
-    _.flatten = function(nestedArray, result) {};
+    _.flatten = function(nestedArray, result) {
+
+        var arr = [];
+        for (var i = 0; i < nestedArray.length; i++) {
+            if (Array.isArray(nestedArray[i])) { // [4,5]
+                arr.push(_.flatten(nestedArray[i], result)); // 
+            } else {
+                arr.push(arr[i], result);
+            }
+        }
+        return arr;
+
+
+    };
 
     // Takes an arbitrary number of arrays and produces an array that contains
     // every item shared between all the passed-in arrays.
