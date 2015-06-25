@@ -215,7 +215,7 @@
         }, true)
     };
 
-   
+
 
     // Determine whether any of the elements pass a truth test. If no iterator is
     // provided, provide a default one
@@ -225,7 +225,7 @@
         //in this case, you would need to return false! 
         //Alternative, If every were false in this case, you'd need to return true.
 
-        return !(_.every(collection, function(y){
+        return !(_.every(collection, function(y) {
             return !(iterator === undefined ? y : iterator(y));
         }));
     };
@@ -250,7 +250,13 @@
     //     bla: "even more stuff"
     //   }); // obj1 now contains key1, key2, key3 and bla
     _.extend = function(obj) {
-        
+        for (var i = 0; i < arguments.length; i++) {
+            for (var prop in arguments[i]) {
+                obj[prop] = arguments[i][prop];
+            }
+        }
+
+        return obj;
     };
 
     // Like extend, but doesn't ever overwrite a key that already
