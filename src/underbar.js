@@ -3,6 +3,8 @@
 
     window._ = {};
 
+    var argumentsArray = 
+
     // Returns whatever value is passed as the argument. This function doesn't
     // seem very useful, but remember it--if a function needs to provide an
     // iterator when the user does not pass one in, this will be handy.
@@ -379,8 +381,9 @@
 
         var zipped = Array(longestArray.length);
         // you want to push each element from each array onto an array with the length of the longestArray.
-        //this right here is a loop through 
+    
         for (var i = 0; i < longestArray.length; i++) {
+            //_.pluck is returning items in the argumentsArray by index, i
             zipped[i] = _.pluck(argumentsArray, i)
         };
         return zipped;
@@ -403,8 +406,16 @@
 
         var argumentsArray = Array.prototype.slice.call(arguments);
 
-        return _.filter(argumentsArray[0], function(val) {
-            return _.indexOf(argumentsArray[1], val) != -1
+        // return _.filter(argumentsArray[0], function(val) {
+        //     return _.indexOf(argumentsArray[1], val) != -1
+        // });
+
+        // with reduce:
+
+          return _.reduce(argumentsArray, function(intersectedArray, currentArray) {
+            return _.filter(intersectedArray, function(val) {
+                return _.indexOf(currentArray, val) !== -1
+            });
         });
 
     };
@@ -412,7 +423,14 @@
     // Take the difference between one array and a number of other arrays.
     // Only the elements present in just the first array will remain.
     _.difference = function(array) {
-        return !_.intersection(array);
+
+        var argumentsArray = Array.prototype.slice.call(arguments);
+
+          return _.reduce(argumentsArray, function(intersectedArray, currentArray) {
+            return _.filter(intersectedArray, function(val) {
+                return _.indexOf(currentArray, val) === -1
+            });
+        });
     };
 
 
